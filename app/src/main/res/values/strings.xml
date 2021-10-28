@@ -4,4 +4,5 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="forgot_password"><u>Forgot Password?</u></string>
+    <string name="webapi">https://prmbookingfield.herokuapp.com/api/</string>
 </resources>
