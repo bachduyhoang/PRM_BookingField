@@ -66,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
 //                            return true;
 //                        }
 //                        break;
-//                    case R.id.page_2:
-//                        selectedFragment = new CartFragment();
-//                        break;
+                    case R.id.page_2:
+                        selectedFragment = new CartFragment();
+                        break;
                     case R.id.page_3:
                         selectedFragment = new TabFragment();
                         break;
@@ -111,11 +111,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    public void clickToViewMorePromotion(View view) {
-//        Intent intent = new Intent(MainActivity.this, PromotionActivity.class);
-//        startActivity(intent);
-//    }
-//
     public void clickToViewDetalFootballField(View view) {
         Intent intent = new Intent(MainActivity.this, BookingActivity.class);
         startActivity(intent);
