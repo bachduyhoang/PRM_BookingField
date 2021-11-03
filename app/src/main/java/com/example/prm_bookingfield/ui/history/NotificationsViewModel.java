@@ -1,4 +1,4 @@
-package com.example.prm_bookingfield.ui.notifications;
+package com.example.prm_bookingfield.ui.history;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
