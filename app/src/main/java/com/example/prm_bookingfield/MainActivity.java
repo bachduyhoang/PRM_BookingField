@@ -1,33 +1,12 @@
 package com.example.prm_bookingfield;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.example.prm_bookingfield.databinding.ActivityMainBinding;
-
-import org.json.JSONArray;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,24 +23,19 @@ public class MainActivity extends AppCompatActivity {
         View logo = topAppBar.getChildAt(0);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = R.string.webapi + "field/1";
-
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new Response.Listener<JSONArray>() {
-            @Override
-            public void onResponse(JSONArray response) {
-                Log.d("response", response.toString());
-            }
-        },new Response.ErrorListener(){
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("error", error.toString());
-            }
-        });
-
-        queue.add(request);
+//        service.getGroupFieldById(1, new DataService.VolleyResponseListener(){
+//
+//            @Override
+//            public void onError(String msg) {
+//                Log.e("Error: ", msg);
+//            }
+//
+//            @Override
+//            public void onResponse(JSONObject objectResponse) {
+//                Log.e("Response: ", objectResponse.toString());
+//
+//            }
+//        });
 
 //        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new UserHomeFragment()).commit();
 //
