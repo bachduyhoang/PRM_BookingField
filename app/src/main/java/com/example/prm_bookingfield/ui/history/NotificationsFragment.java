@@ -1,4 +1,4 @@
-package com.example.prm_bookingfield.ui.notifications;
+package com.example.prm_bookingfield.ui.history;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.prm_bookingfield.R;
 import com.example.prm_bookingfield.databinding.FragmentNotificationsBinding;
 
 public class NotificationsFragment extends Fragment {
