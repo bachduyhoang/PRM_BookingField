@@ -23,6 +23,8 @@ public class GroupFieldService {
 
     Context context;
 
+    public static final String COMMON_URL = "https://prmbookingfield.herokuapp.com/api/";
+
     public GroupFieldService(Context context){
         this.context = context;
     }
@@ -34,7 +36,7 @@ public class GroupFieldService {
     }
 
     public void getGroupFieldById(int id, GroupFieldService.VolleyResponseListener volleyResponseListener){
-        String url = "https://prmbookingfield.herokuapp.com/api/GroupField/"+id;
+        String url = COMMON_URL + "GroupField/"+id;
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,  null, new Response.Listener<JSONObject>() {
             @Override
@@ -58,7 +60,7 @@ public class GroupFieldService {
     }
 
     public void getListGroupField(GroupFieldService.ListGroupFieldResponse listResponse){
-        String url = "https://prmbookingfield.herokuapp.com/api/GroupField/GroupFieldWithField";
+        String url = COMMON_URL + "GroupField/GroupFieldWithField";
 
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
             @Override
@@ -79,6 +81,7 @@ public class GroupFieldService {
                             Field child = new Field();
                             child.setFieldName(childField.getString("name"));
                             child.setTypeField(childField.getInt("typeField"));
+                            child.setImagePath(childField.getString("imagePath"));
                             fields.add(child);
 
                         }
