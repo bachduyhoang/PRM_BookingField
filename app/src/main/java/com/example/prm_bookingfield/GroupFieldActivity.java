@@ -28,8 +28,6 @@ public class GroupFieldActivity extends AppCompatActivity {
         setContentView(R.layout.activity_group_field);
         rvGroupField = findViewById(R.id.rvGroupField);
 
-        groupFieldArrayList = new ArrayList<>();
-        fieldArrayList = new ArrayList<>();
         GroupFieldService service = new GroupFieldService(GroupFieldActivity.this);
 
         service.getListGroupField(new GroupFieldService.ListGroupFieldResponse(){
@@ -40,11 +38,10 @@ public class GroupFieldActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(List<GroupField> listResponse) {
-                groupFieldArrayList = new ArrayList<>();
-                fieldArrayList = new ArrayList<>();
+                groupFieldArrayList = (ArrayList<GroupField>) listResponse;
 
-                myAdapter = new MyAdapter(GroupFieldActivity.this, (ArrayList<GroupField>) listResponse);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GroupFieldActivity.this);
+                myAdapter = new MyAdapter(GroupFieldActivity.this, (ArrayList<GroupField>) groupFieldArrayList);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(GroupFieldActivity.this, RecyclerView.VERTICAL,false);
                 rvGroupField.setLayoutManager(linearLayoutManager);
                 rvGroupField.setAdapter(myAdapter);
 

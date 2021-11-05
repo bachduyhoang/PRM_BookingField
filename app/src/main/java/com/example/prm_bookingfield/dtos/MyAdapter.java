@@ -1,7 +1,9 @@
 package com.example.prm_bookingfield.dtos;
 
 import android.app.Activity;
+import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +23,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private Activity activity;
     ArrayList<GroupField> groupFieldArrayList;
-
     public MyAdapter(Activity activity, ArrayList<GroupField> groupFieldArrayList) {
         this.activity = activity;
         this.groupFieldArrayList = groupFieldArrayList;
@@ -49,16 +50,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
                     .load(uri)
                     .into(holder.imageGroupField);
         }
-
         FieldItemAdapter fieldItem = new FieldItemAdapter((ArrayList<Field>) groupField.getFields());
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity, RecyclerView.HORIZONTAL,false);
         holder.rv_listField.setLayoutManager(linearLayoutManager);
         holder.rv_listField.setAdapter(fieldItem);
-
     }
 
     @Override
     public int getItemCount() {
+
         return groupFieldArrayList.size();
     }
 
@@ -69,12 +69,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         ImageView imageGroupField;
 
         public ViewHolder(@NonNull View itemView){
-            super((itemView));
+            super(itemView);
 
             groupField = itemView.findViewById(R.id.tvGroupFieldName);
             address = itemView.findViewById(R.id.tvLocation);
             rv_listField = itemView.findViewById(R.id.rv_listField);
             imageGroupField = itemView.findViewById(R.id.ivGroupField);
+
         }
     }
 }

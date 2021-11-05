@@ -22,11 +22,12 @@
         <entry key="..\:/Semester7-Fall2021/PRM391/ProjectFE-UI/PRM_BookingField/app/src/main/res/drawable/outline_location_on_24.xml" value="0.2703125" />
         <entry key="..\:/Semester7-Fall2021/PRM391/ProjectFE-UI/PRM_BookingField/app/src/main/res/layout/activity_field.xml" value="0.2115036231884058" />
         <entry key="..\:/Semester7-Fall2021/PRM391/ProjectFE-UI/PRM_BookingField/app/src/main/res/layout/activity_group_field.xml" value="0.25416666666666665" />
-        <entry key="..\:/Semester7-Fall2021/PRM391/ProjectFE-UI/PRM_BookingField/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Semester7-Fall2021/PRM391/ProjectFE-UI/PRM_BookingField/app/src/main/res/layout/activity_login.xml" value="0.14947916666666666" />
+        <entry key="..\:/Semester7-Fall2021/PRM391/ProjectFE-UI/PRM_BookingField/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Semester7-Fall2021/PRM391/ProjectFE-UI/PRM_BookingField/app/src/main/res/layout/fragment_dashboard.xml" value="0.18297101449275363" />
         <entry key="..\:/Semester7-Fall2021/PRM391/ProjectFE-UI/PRM_BookingField/app/src/main/res/layout/list_field_items.xml" value="0.4" />
         <entry key="..\:/Semester7-Fall2021/PRM391/ProjectFE-UI/PRM_BookingField/app/src/main/res/layout/list_view_fields.xml" value="0.4" />
-        <entry key="..\:/Semester7-Fall2021/PRM391/ProjectFE-UI/PRM_BookingField/app/src/main/res/layout/list_view_group_fields.xml" value="0.4" />
+        <entry key="..\:/Semester7-Fall2021/PRM391/ProjectFE-UI/PRM_BookingField/app/src/main/res/layout/list_view_group_fields.xml" value="0.264" />
       </map>
     </option>
   </component>

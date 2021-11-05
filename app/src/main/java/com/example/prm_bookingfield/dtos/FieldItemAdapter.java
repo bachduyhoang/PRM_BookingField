@@ -1,6 +1,7 @@
 package com.example.prm_bookingfield.dtos;
 
 import android.media.Image;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.prm_bookingfield.R;
 
 import java.util.ArrayList;
@@ -32,14 +34,21 @@ public class FieldItemAdapter extends RecyclerView.Adapter<FieldItemAdapter.View
     @Override
     public void onBindViewHolder(@NonNull FieldItemAdapter.ViewHolder holder, int position) {
         Field fieldItem = fieldArrayList.get(position);
-        holder.tvFieldName.setText(fieldItem.getFieldName());
+        holder.tvFieldName.setText("Field: " +fieldItem.getFieldName());
         holder.tvTypeField.setText(String.valueOf(fieldItem.getTypeField()));
         holder.tvSlotsAvailable.setText("Slot available: 3");
 
+        if(fieldItem.getImagePath() != null){
+            Uri uri = Uri.parse(fieldItem.getImagePath());
+            Glide.with(holder.ivItemField.getContext())
+                    .load(uri)
+                    .into(holder.ivItemField);
+        }
     }
 
     @Override
     public int getItemCount() {
+
         return fieldArrayList.size();
     }
 
@@ -54,7 +63,7 @@ public class FieldItemAdapter extends RecyclerView.Adapter<FieldItemAdapter.View
         TextView tvSlotsAvailable;
 
         public ViewHolder(@NonNull View itemView){
-            super((itemView));
+            super(itemView);
             ivItemField = itemView.findViewById(R.id.ivItemField);
             ivIconAmount = itemView.findViewById(R.id.ivIconAmount);
             tvFieldName = itemView.findViewById(R.id.tvFieldName);

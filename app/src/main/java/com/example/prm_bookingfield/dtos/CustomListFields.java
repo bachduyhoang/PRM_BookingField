@@ -72,8 +72,6 @@ public class CustomListFields extends BaseAdapter {
         Field field = this.listFieldData.get(position);
         int imageAmount = this.getMipmapResIdByName("multiple_user");
         int imageLocation = this.getMipmapResIdByName("outline_location_on_24");
-        int imageStar = this.getMipmapResIdByName("star");
-//        int imageField = this.getMipmapResIdByName("star");
 
         if(field.getImagePath() != null){
             Uri uri = Uri.parse(field.getImagePath());
