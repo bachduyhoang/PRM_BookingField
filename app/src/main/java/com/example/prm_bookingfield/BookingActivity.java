@@ -5,12 +5,17 @@ import androidx.core.content.ContextCompat;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+
+import com.example.prm_bookingfield.data.model.ItemInCart;
+import com.example.prm_bookingfield.service.FieldService;
+import com.example.prm_bookingfield.service.ManagePrefConfig;
 
 import java.util.Calendar;
 
@@ -28,12 +33,13 @@ public class BookingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking);
 
+        Intent intent = this.getIntent();
+        String fieldID = intent.getStringExtra("fieldID");
+
+
         calendar = Calendar.getInstance();
         txtSelectDate = findViewById(R.id.actBooking_btnCalendar);
         toggleButton=findViewById(R.id.tgBtn);
-        TextView textIgnore1 = findViewById(R.id.txtTextPriceDiscount);
-
-        textIgnore1.setPaintFlags(textIgnore1.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
         now = calendar.get(Calendar.DAY_OF_MONTH) +
                 "/" + (calendar.get(Calendar.MONTH) + 1) +
@@ -43,6 +49,11 @@ public class BookingActivity extends AppCompatActivity {
         day = calendar.get(Calendar.DAY_OF_MONTH);
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
+    }
+
+    public void renderField(String fieldId){
+        FieldService fieldService = new FieldService(this.getApplicationContext());
+//        fieldService.getFieldById();
     }
 
     public void clickToChangeDate(View view) {
@@ -76,6 +87,10 @@ public class BookingActivity extends AppCompatActivity {
     }
 
     public void clickToAddToCart(View view) {
+        ManagePrefConfig managePrefConfig = new ManagePrefConfig();
+        ItemInCart item = new ItemInCart();
+        managePrefConfig.addItemToCart(this.getApplicationContext(), item);
+
         Intent intent=new Intent(BookingActivity.this,MainActivity.class);
         intent.putExtra("action","add to cart");
         startActivity(intent);

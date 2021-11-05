@@ -1,6 +1,9 @@
 package com.example.prm_bookingfield;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 
@@ -18,6 +21,7 @@ import com.example.prm_bookingfield.ui.history.TabFragment;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.fragment.app.Fragment;
@@ -47,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-
 //        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new UserHomeFragment()).commit();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -55,29 +58,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
                 switch (item.getItemId()) {
-
-//        service.getGroupFieldById(1, new DataService.VolleyResponseListener(){
-//
-//            @Override
-//            public void onError(String msg) {
-//                Log.e("Error: ", msg);
-//            }
-//
-//            @Override
-//            public void onResponse(JSONObject objectResponse) {
-//                Log.e("Response: ", objectResponse.toString());
-//
-//            }
-//        });
-
-//        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new UserHomeFragment()).commit();
-//
-//        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-//            @Override
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                Fragment selectedFragment = null;
-//                switch (item.getItemId()) {
-
 //                    case R.id.pageHome:
 //                        selectedFragment = new UserHomeFragment();
 //                        break;
