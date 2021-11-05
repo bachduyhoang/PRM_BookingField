@@ -10,6 +10,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.prm_bookingfield.R;
 
 import java.util.List;
@@ -61,6 +62,9 @@ public class CustomListViewCart extends BaseAdapter {
         }
 
         ItemInCart items = this.listData.get(position);
+        Glide.with(holder.imageViewField.getContext())
+                .load(items.getImageUrl())
+                .into(holder.imageViewField);
         holder.groupField.setText(items.getGroupFiledName());
         holder.field.setText(items.getFiledName());
         holder.typeField.setText(items.getTypeField());

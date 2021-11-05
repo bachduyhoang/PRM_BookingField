@@ -36,6 +36,7 @@
                     android:layout_marginTop="15dp"
                     android:alpha="0.5"
                     android:backgroundTint="@android:color/white"
+                    android:minHeight="48dp"
                     android:src="@drawable/ic_baseline_arrow_back_24"
                     app:fabSize="mini"
                     tools:ignore="SpeakableTextPresentCheck" />
@@ -130,7 +131,7 @@
                                 app:icon="@drawable/ic_baseline_calendar_today_24"
                                 app:iconGravity="top"
                                 app:iconSize="20dp"
-                                tools:ignore="SpeakableTextPresentCheck" />
+                                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
                         </LinearLayout>
 
                         <View
@@ -154,21 +155,6 @@
                                 android:textColor="#099CD9"
                                 android:textSize="18dp"
                                 android:textStyle="bold" />
-                            <TextView
-                                android:id="@+id/txtTextPriceDiscount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:text="5$/h"
-                                android:textSize="14dp"
-                                android:textColor="@color/red"/>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textAlignment="textEnd"
-                                android:text="-20%"
-                                android:textSize="16dp"
-                                android:textColor="@color/red"/>
                         </LinearLayout>
 
 
@@ -182,6 +168,7 @@
                             <ToggleButton
 
                                 style="@style/MyToggleButton"
+                                android:layout_height="48dp"
                                 android:enabled="false"
                                 android:textOff="7h-8h"
                                 android:textOn="7h-8h" />
@@ -195,24 +182,16 @@
 
                             <ToggleButton
                                 style="@style/MyToggleButton"
+                                android:layout_height="48dp"
                                 android:textOff="9h-10h"
                                 android:textOn="9h-10h" />
 
                             <ToggleButton
                                 style="@style/MyToggleButton"
+                                android:layout_height="48dp"
                                 android:textOff="10h-11h"
                                 android:textOn="10h-11h" />
                         </GridLayout>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="10dp"
-                            android:text="7$/h"
-                            android:textColor="#099CD9"
-                            android:textSize="18dp"
-                            android:textStyle="bold" />
 
                         <GridLayout
                             android:layout_width="match_parent"
@@ -223,21 +202,25 @@
 
                             <ToggleButton
                                 style="@style/MyToggleButton"
+                                android:layout_height="48dp"
                                 android:textOff="17h-18h"
                                 android:textOn="17h-18h" />
 
                             <ToggleButton
                                 style="@style/MyToggleButton"
+                                android:layout_height="48dp"
                                 android:textOff="18h-19h"
                                 android:textOn="18h-19h" />
 
                             <ToggleButton
                                 style="@style/MyToggleButton"
+                                android:layout_height="48dp"
                                 android:textOff="19h-20h"
                                 android:textOn="19h-20h" />
 
                             <ToggleButton
                                 style="@style/MyToggleButton"
+                                android:layout_height="48dp"
                                 android:textOff="21h-22h"
                                 android:textOn="21h-22h" />
 
@@ -254,41 +237,6 @@
                             android:onClick="clickToAddToCart"
                             android:text="Add to cart"
                             app:cornerRadius="20dp" />
-
-                        <!--                        <LinearLayout-->
-                        <!--                            android:layout_width="match_parent"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:layout_marginLeft="25dp"-->
-                        <!--                            android:layout_marginTop="10dp"-->
-                        <!--                            android:layout_marginRight="25dp"-->
-                        <!--                            android:gravity="center"-->
-                        <!--                            android:orientation="horizontal"-->
-
-                        <!--                            app:columnCount="3">-->
-
-                        <!--                            <com.google.android.material.button.MaterialButton-->
-                        <!--                                android:layout_width="wrap_content"-->
-                        <!--                                android:layout_height="wrap_content"-->
-                        <!--                                android:layout_margin="10dp"-->
-                        <!--                                android:backgroundTint="@android:color/holo_blue_dark"-->
-                        <!--                                android:text="Edit"-->
-                        <!--                                app:cornerRadius="10dp" />-->
-
-                        <!--                            <com.google.android.material.button.MaterialButton-->
-                        <!--                                android:layout_width="wrap_content"-->
-                        <!--                                android:layout_height="wrap_content"-->
-                        <!--                                android:layout_margin="10dp"-->
-                        <!--                                android:backgroundTint="@android:color/holo_red_dark"-->
-                        <!--                                android:text="Delete"-->
-                        <!--                                app:cornerRadius="10dp" />-->
-
-                        <!--                            <com.google.android.material.button.MaterialButton-->
-                        <!--                                android:layout_width="wrap_content"-->
-                        <!--                                android:layout_height="wrap_content"-->
-                        <!--                                android:layout_margin="10dp"-->
-                        <!--                                android:text="Report"-->
-                        <!--                                app:cornerRadius="10dp" />-->
-                        <!--                        </LinearLayout>-->
                     </LinearLayout>
                 </LinearLayout>
             </RelativeLayout>
