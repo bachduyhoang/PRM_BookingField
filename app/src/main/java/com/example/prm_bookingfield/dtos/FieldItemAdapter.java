@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -31,12 +32,16 @@ public class FieldItemAdapter extends RecyclerView.Adapter<FieldItemAdapter.View
         return new ViewHolder(view);
     }
 
+    @BindingAdapter({"bind:image_url"})
     @Override
     public void onBindViewHolder(@NonNull FieldItemAdapter.ViewHolder holder, int position) {
         Field fieldItem = fieldArrayList.get(position);
         holder.tvFieldName.setText("Field: " +fieldItem.getFieldName());
         holder.tvTypeField.setText(String.valueOf(fieldItem.getTypeField()));
         holder.tvSlotsAvailable.setText("Slot available: 3");
+        Glide.with(holder.ivItemField.getContext())
+                .load(fieldItem.getImagePath())
+                .into(holder.ivItemField);
 
         if(fieldItem.getImagePath() != null){
             Uri uri = Uri.parse(fieldItem.getImagePath());
