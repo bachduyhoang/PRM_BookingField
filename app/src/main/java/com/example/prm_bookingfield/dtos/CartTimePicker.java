@@ -1,4 +1,4 @@
-package com.example.prm_bookingfield.data.model;
+package com.example.prm_bookingfield.dtos;
 
 public class CartTimePicker {
      private String timePick;

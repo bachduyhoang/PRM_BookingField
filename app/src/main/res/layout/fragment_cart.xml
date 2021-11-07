@@ -8,6 +8,7 @@
     tools:context=".ui.cart.CartFragment">
 
     <ListView
+        android:id="@+id/fragmentCart_listViewCart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,11 +40,11 @@
                 android:textColor="#000000" />
 
             <TextView
-                android:id="@+id/textView28"
+                android:id="@+id/fragmentCart_Total"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="$11.2"
+                android:text="$0"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold" />
@@ -55,7 +56,7 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/btnBook"
+                android:id="@+id/fragmentCart_btnBook"
                 style="@style/ButtonLoginRegister"
                 android:layout_width="137dp"
                 android:layout_height="wrap_content"

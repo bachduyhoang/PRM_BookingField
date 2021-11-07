@@ -1,22 +1,24 @@
-package com.example.prm_bookingfield.data.model;
+package com.example.prm_bookingfield.dtos;
 
 import java.util.Date;
 import java.util.List;
 
 public class ItemInCart {
+    private  String fieldID;
     private String groupFiledName;
     private String imageUrl;
     private String filedName;
     private int typeField;
     private String address;
-    private Date bookDate;
+    private String bookDate;
     private List<CartTimePicker> timePicker;
     private float total;
 
     public ItemInCart() {
     }
 
-    public ItemInCart(String groupFiledName, String imageUrl, String filedName, int typeField, String address, Date bookDate, List<CartTimePicker> timePicker, float total) {
+    public ItemInCart(String fieldID, String groupFiledName, String imageUrl, String filedName, int typeField, String address, String bookDate, List<CartTimePicker> timePicker, float total) {
+        this.fieldID = fieldID;
         this.groupFiledName = groupFiledName;
         this.imageUrl = imageUrl;
         this.filedName = filedName;
@@ -43,32 +45,16 @@ public class ItemInCart {
         this.address = address;
     }
 
-    public void setTotal(float total) {
-        this.total = total;
-    }
-
-    public String getGroupFiledName() {
-        return groupFiledName;
-    }
-
-    public void setGroupFiledName(String groupFiledName) {
-        this.groupFiledName = groupFiledName;
-    }
-
-    public String getFiledName() {
-        return filedName;
-    }
-
-    public void setFiledName(String filedName) {
-        this.filedName = filedName;
-    }
-
-    public Date getBookDate() {
+    public String getBookDate() {
         return bookDate;
     }
 
-    public void setBookDate(Date bookDate) {
+    public void setBookDate(String bookDate) {
         this.bookDate = bookDate;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
     }
 
     public List<CartTimePicker> getTimePicker() {
@@ -97,5 +83,29 @@ public class ItemInCart {
             result += timePicker.get(i).getPrice();
         }
         return result;
+    }
+
+    public String getFieldID() {
+        return fieldID;
+    }
+
+    public void setFieldID(String fieldID) {
+        this.fieldID = fieldID;
+    }
+
+    public String getGroupFiledName() {
+        return groupFiledName;
+    }
+
+    public void setGroupFiledName(String groupFiledName) {
+        this.groupFiledName = groupFiledName;
+    }
+
+    public String getFiledName() {
+        return filedName;
+    }
+
+    public void setFiledName(String filedName) {
+        this.filedName = filedName;
     }
 }
