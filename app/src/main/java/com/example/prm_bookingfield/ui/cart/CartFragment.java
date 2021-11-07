@@ -11,10 +11,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.prm_bookingfield.BookingActivity;
-import com.example.prm_bookingfield.MainActivity;
 import com.example.prm_bookingfield.R;
-import com.example.prm_bookingfield.adapters.CustomGridViewBookingButton;
 import com.example.prm_bookingfield.adapters.CustomListViewCart;
 import com.example.prm_bookingfield.dtos.CartTimePicker;
 import com.example.prm_bookingfield.dtos.ItemInCart;
@@ -41,7 +38,7 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
-        listViewCart = view.findViewById(R.id.fragmentCart_listViewCart);
+        listViewCart = view.findViewById(R.id.fragmentCart_recyclerViewCart);
         txtTotal = view.findViewById(R.id.fragmentCart_Total);
         btnBook = view.findViewById(R.id.fragmentCart_btnBook);
 
