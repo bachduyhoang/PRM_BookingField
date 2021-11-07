@@ -36,28 +36,27 @@ public class FieldService {
         this.context = context;
     }
 
-    public interface VolleyResponseListener{
+    public interface FieldResponse{
         void onError(String msg);
-
         void onResponse(Field field);
     }
 
-    public void getFieldById(int id, VolleyResponseListener volleyResponseListener){
+    public void getFieldById(int id, FieldResponse volleyResponseListener){
         String url = URL + "field/"+id;
-
+        Field field = new Field();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,  null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    Field field = new Field();
                     field.setFieldID(id);
                     field.setFieldName(response.getString("name"));
+                    field.setTypeField(response.getInt("typeField"));
+                    field.setAddress(response.getString("address"));
+                    field.setImagePath(response.getString("imagePath"));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-                ;
-//                volleyResponseListener.onResponse(response);
+                volleyResponseListener.onResponse(field);
             }
         },new Response.ErrorListener(){
 
@@ -71,7 +70,6 @@ public class FieldService {
 
     public interface ListFieldResponse{
         void onError(String msg);
-
         void onResponse(List<Field> listResponse);
     }
 

@@ -1,4 +1,4 @@
-package com.example.prm_bookingfield.data.model;
+package com.example.prm_bookingfield.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.prm_bookingfield.R;
+import com.example.prm_bookingfield.dtos.ItemInCart;
 
 import java.util.List;
 
@@ -77,16 +78,16 @@ public class CustomListViewCart extends BaseAdapter {
 
             }
         });
-        for (int i = 0; i < items.getTimePicker().size(); i++) {
-            TableRow tbr = new TableRow(holder.timePicker.getContext());
-            TextView tv1 = new TextView(holder.timePicker.getContext());
-            tv1.setText(items.getTimePicker().get(i).getTimePick());
-            tbr.addView(tv1);
-            TextView tv2= new TextView(holder.timePicker.getContext());
-            tv2.setText((int) items.getTimePicker().get(i).getPrice());
-            tbr.addView(tv2);
-            holder.timePicker.addView(tbr);
-        }
+//        for (int i = 0; i < items.getTimePicker().size(); i++) {
+//            TableRow tbr = new TableRow(holder.timePicker.getContext());
+//            TextView tv1 = new TextView(holder.timePicker.getContext());
+//            tv1.setText(items.getTimePicker().get(i).getTimePick());
+//            tbr.addView(tv1);
+//            TextView tv2= new TextView(holder.timePicker.getContext());
+//            tv2.setText((int) items.getTimePicker().get(i).getPrice());
+//            tbr.addView(tv2);
+//            holder.timePicker.addView(tbr);
+//        }
 
         return convertView;
     }
