@@ -18,6 +18,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.prm_bookingfield.ui.cart.CartFragment;
 import com.example.prm_bookingfield.ui.history.TabFragment;
 
+import com.example.prm_bookingfield.ui.home.HomeFragment;
+import com.example.prm_bookingfield.ui.home.ProfileFragment;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -51,16 +53,16 @@ public class MainActivity extends AppCompatActivity {
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-//        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new UserHomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new HomeFragment()).commit();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
                 switch (item.getItemId()) {
-//                    case R.id.pageHome:
-//                        selectedFragment = new UserHomeFragment();
-//                        break;
+                    case R.id.pageHome:
+                        selectedFragment = new HomeFragment();
+                        break;
 //                    case R.id.pageAccount:
 //                        if (validation.isUser()) {
 //                            selectedFragment = new ProfileFragment();

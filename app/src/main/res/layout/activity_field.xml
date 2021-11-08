@@ -33,8 +33,9 @@
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="624dp" >
-        <ListView
-            android:id="@+id/listViewFields"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_listFieldItem"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>

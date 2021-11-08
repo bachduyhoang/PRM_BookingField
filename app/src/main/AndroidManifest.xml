@@ -12,10 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PRM_BookingField">
         <activity
+            android:name=".RegisterActivity"
+            android:exported="true" />
+        <activity
+            android:name=".BookingActivity"
+            android:exported="true" />
+        <activity
             android:name=".DemoButtonActivity"
             android:exported="true" />
         <activity
             android:name=".BookingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".FieldActivity"
             android:exported="true" />
         <activity
             android:name=".LoginActivity"

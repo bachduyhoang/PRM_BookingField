@@ -1,8 +1,9 @@
 package com.example.prm_bookingfield.dtos;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GroupField {
+public class GroupField implements Serializable {
     private int GroupFieldId;
     private String Name;
     private String Address;
@@ -13,7 +14,6 @@ public class GroupField {
     private String CreateAt;
     private String UserId;
     private List<Field> fields;
-
 
     public List<Field> getFields() {
         return fields;
