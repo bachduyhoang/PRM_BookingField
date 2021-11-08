@@ -1,6 +1,6 @@
 package com.example.prm_bookingfield.dtos;
 
-import android.media.Image;
+import android.app.Activity;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,19 +9,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.BindingAdapter;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.prm_bookingfield.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class FieldItemAdapter extends RecyclerView.Adapter<FieldItemAdapter.ViewHolder> {
 
     ArrayList<Field> fieldArrayList;
+    Activity activity;
 
-    public FieldItemAdapter(ArrayList<Field> fieldArrayList) {
+    public FieldItemAdapter(Activity activity, ArrayList<Field> fieldArrayList) {
+        this.activity = activity;
         this.fieldArrayList = fieldArrayList;
     }
 
@@ -32,24 +36,25 @@ public class FieldItemAdapter extends RecyclerView.Adapter<FieldItemAdapter.View
         return new ViewHolder(view);
     }
 
-    @BindingAdapter({"bind:image_url"})
     @Override
     public void onBindViewHolder(@NonNull FieldItemAdapter.ViewHolder holder, int position) {
+
         Field fieldItem = fieldArrayList.get(position);
         holder.tvFieldName.setText("Field: " +fieldItem.getFieldName());
         holder.tvTypeField.setText(String.valueOf(fieldItem.getTypeField()));
-        holder.tvSlotsAvailable.setText("Slot available: 3");
-        Glide.with(holder.ivItemField.getContext())
-                .load(fieldItem.getImagePath())
-                .into(holder.ivItemField);
 
+        holder.tvStartTime.setText(fieldItem.getSchedule().getTimeStart()+"h");
+        holder.tvEndTime.setText(" - " + fieldItem.getSchedule().getTimeEnd()+"h");
+        holder.tvOriginalPrice.setText("Price: " + fieldItem.getSchedule().getOriginPrice()+"$");
         if(fieldItem.getImagePath() != null){
             Uri uri = Uri.parse(fieldItem.getImagePath());
             Glide.with(holder.ivItemField.getContext())
                     .load(uri)
+                    .apply(new RequestOptions().override(400, 300))
                     .into(holder.ivItemField);
         }
     }
+
 
     @Override
     public int getItemCount() {
@@ -59,13 +64,13 @@ public class FieldItemAdapter extends RecyclerView.Adapter<FieldItemAdapter.View
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView ivItemField;
-        ImageView ivIconAmount;
+
         TextView tvFieldName;
+        ImageView ivIconAmount;
         TextView tvTypeField;
         TextView tvStartTime;
         TextView tvEndTime;
         TextView tvOriginalPrice;
-        TextView tvSlotsAvailable;
 
         public ViewHolder(@NonNull View itemView){
             super(itemView);
@@ -76,8 +81,6 @@ public class FieldItemAdapter extends RecyclerView.Adapter<FieldItemAdapter.View
             tvStartTime = itemView.findViewById(R.id.tvStartTime);
             tvEndTime = itemView.findViewById(R.id.tvEndTime);
             tvOriginalPrice = itemView.findViewById(R.id.tvOriginalPrice);
-            tvSlotsAvailable = itemView.findViewById(R.id.tvSlotsAvailable);
-
         }
     }
 }

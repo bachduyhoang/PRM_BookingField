@@ -16,6 +16,32 @@ public class Field {
     private int TopHot;
     private int GroupFieldID;
     private String UserID;
+    private FieldSchedule schedule;
+
+    public Field(int fieldID, String fieldName, String address, int typeField, String imagePath, String imageName, String createAt, boolean status, String deleteAt, boolean isHot, int topHot, int groupFieldID, String userID, FieldSchedule schedule) {
+        FieldID = fieldID;
+        FieldName = fieldName;
+        Address = address;
+        TypeField = typeField;
+        ImagePath = imagePath;
+        ImageName = imageName;
+        CreateAt = createAt;
+        Status = status;
+        DeleteAt = deleteAt;
+        IsHot = isHot;
+        TopHot = topHot;
+        GroupFieldID = groupFieldID;
+        UserID = userID;
+        this.schedule = schedule;
+    }
+
+    public FieldSchedule getSchedule() {
+        return schedule;
+    }
+
+    public void setSchedule(FieldSchedule schedule) {
+        this.schedule = schedule;
+    }
 
     public int getFieldID() {
         return FieldID;
@@ -122,21 +148,5 @@ public class Field {
     }
 
     public Field() {
-    }
-
-    public Field(int fieldID, String fieldName, String address, int typeField, String imagePath, String imageName, String createAt, boolean status, String deleteAt, boolean isHot, int topHot, int groupFieldID, String userID) {
-        FieldID = fieldID;
-        FieldName = fieldName;
-        Address = address;
-        TypeField = typeField;
-        ImagePath = imagePath;
-        ImageName = imageName;
-        CreateAt = createAt;
-        Status = status;
-        DeleteAt = deleteAt;
-        IsHot = isHot;
-        TopHot = topHot;
-        GroupFieldID = groupFieldID;
-        UserID = userID;
     }
 }

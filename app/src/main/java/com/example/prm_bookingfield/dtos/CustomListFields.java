@@ -61,8 +61,6 @@ public class CustomListFields extends BaseAdapter {
             holder.timeEnd = (TextView) convertView.findViewById(R.id.tvEndTime);
             holder.price = (TextView) convertView.findViewById(R.id.tvOriginalPrice);
 
-            holder.slotAvailable = (TextView) convertView.findViewById(R.id.tvSlotsAvailable);
-
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -81,7 +79,6 @@ public class CustomListFields extends BaseAdapter {
         }
 
         holder.fieldName.setText(field.getFieldName());
-        //lack date
 
         holder.imageIconAmount.setImageResource(imageAmount);
         holder.amount.setText("5");
@@ -97,9 +94,6 @@ public class CustomListFields extends BaseAdapter {
 
 //        holder.imageStar.setImageResource(imageStar);
 //        holder.numOfStar.setText("4.5");
-
-        holder.slotAvailable.setText("Slots available: 3");
-
         return convertView;
     }
 
@@ -124,7 +118,5 @@ public class CustomListFields extends BaseAdapter {
         TextView timeStart;
         TextView timeEnd;
         TextView price;
-
-        TextView slotAvailable;
     }
 }

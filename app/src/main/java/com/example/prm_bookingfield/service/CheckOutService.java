@@ -30,6 +30,7 @@ public class CheckOutService{
             StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
+
                     Log.i("VOLLEY", response);
                 }
             }, new Response.ErrorListener() {
