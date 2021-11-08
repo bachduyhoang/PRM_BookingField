@@ -17,6 +17,7 @@
         <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout-w936dp/activity_login.xml" value="0.271875" />
         <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout/activity_booking.xml" value="0.33" />
         <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout/activity_demo_button.xml" value="0.3421875" />
+        <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout/activity_field.xml" value="0.225" />
         <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout/activity_group_field.xml" value="0.20520833333333333" />
         <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout/activity_main.xml" value="0.33" />
@@ -30,7 +31,7 @@
         <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout/fragment_tab.xml" value="0.36666666666666664" />
         <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout/grid_item_button_booking.xml" value="0.34057971014492755" />
         <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout/list_cart_layout.xml" value="0.36666666666666664" />
-        <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout/list_field_items.xml" value="0.20520833333333333" />
+        <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout/list_field_items.xml" value="0.5" />
         <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout/list_view_fields.xml" value="0.20520833333333333" />
         <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/layout/list_view_group_fields.xml" value="0.20520833333333333" />
         <entry key="..\:/Mobile/PRM_BookingField/app/src/main/res/menu/bottom_nav_menu.xml" value="0.17037037037037037" />

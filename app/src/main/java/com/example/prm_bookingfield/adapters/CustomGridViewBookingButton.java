@@ -58,8 +58,8 @@ public class CustomGridViewBookingButton extends BaseAdapter {
         }
 
         String time = this.listSchedule.get(position).getTime();
-        holder.button.setTextOn(time);
-        holder.button.setTextOff(time);
+        holder.button.setTextOn(time+"H-" + (Integer.parseInt(time)+1)+"H");
+        holder.button.setTextOff(time+"H-" + (Integer.parseInt(time)+1)+"H");
         holder.button.setChecked(this.listSchedule.get(position).isStatus());
 
         holder.button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
