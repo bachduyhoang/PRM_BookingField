@@ -18,10 +18,19 @@
             android:name=".BookingActivity"
             android:exported="true" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".DemoButtonActivity"
+            android:exported="true" />
+        <activity
+            android:name=".BookingActivity"
             android:exported="true" />
         <activity
             android:name=".FieldActivity"
+            android:exported="true" />
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".GroupFieldActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

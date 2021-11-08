@@ -8,6 +8,9 @@ import android.se.omapi.Session;
 import com.example.prm_bookingfield.LoginActivity;
 import com.example.prm_bookingfield.data.model.ItemInCart;
 import com.example.prm_bookingfield.dtos.User;
+import android.preference.PreferenceManager;
+
+import com.example.prm_bookingfield.dtos.ItemInCart;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -71,7 +74,14 @@ public class ManagePrefConfig {
         SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor myEdit = preferences.edit();
         myEdit.putString(LIST_CART, jsonCart);
-        myEdit.commit();
+        myEdit.apply();
+    }
+
+    public void removeCart(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = preferences.edit();
+        myEdit.putString(LIST_CART, null);
+        myEdit.apply();
     }
 
     public List<ItemInCart> readListCartFromPref(Context context){
@@ -87,12 +97,59 @@ public class ManagePrefConfig {
         return null;
     }
 
-    public boolean addItemToCart(Context context, ItemInCart item){
+    public void addItemToCart(Context context, ItemInCart item){
         List<ItemInCart> cart = readListCartFromPref(context);
+        if(cart == null){
+            cart = new ArrayList<>();
+        }
         if(cart != null){
             cart.add(item);
             writeCartPref(context, cart);
         }
-        return  true;
     }
+
+    public ItemInCart checkItemExist(Context context ,String fieldId, String date){
+        List<ItemInCart> listCart = readListCartFromPref(context);
+        if(listCart == null){
+            return null;
+        }else {
+            for (int i = 0; i < listCart.size(); i++) {
+                ItemInCart item = listCart.get(i);
+                if(item.getFieldID().equalsIgnoreCase(fieldId) && item.getBookDate().equals(date)){
+                    return item;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void replaceItemInCart(Context context, ItemInCart newItem, String fieldId, String date){
+        List<ItemInCart> listCart = readListCartFromPref(context);
+        if(listCart != null){
+            for (int i = 0; i < listCart.size(); i++) {
+                ItemInCart item = listCart.get(i);
+                if(item.getFieldID().equalsIgnoreCase(fieldId) && item.getBookDate().equals(date)){
+                    item.setTimePicker(newItem.getTimePicker());
+                    break;
+                }
+            }
+            writeCartPref(context, listCart);
+        }
+    }
+
+    public void removeItemInCart(Context context, String fieldId, String date){
+        List<ItemInCart> listCart = readListCartFromPref(context);
+        if(listCart != null){
+            for (int i = 0; i < listCart.size(); i++) {
+                ItemInCart item = listCart.get(i);
+                if(item.getFieldID().equalsIgnoreCase(fieldId) && item.getBookDate().equals(date)){
+                    listCart.remove(i);
+                    break;
+                }
+            }
+            writeCartPref(context, listCart);
+        }
+    }
+
+
 }
