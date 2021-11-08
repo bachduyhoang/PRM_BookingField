@@ -26,6 +26,13 @@ public class ManagePrefConfig {
         myEdit.apply();
     }
 
+    public void removeCart(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences.Editor myEdit = preferences.edit();
+        myEdit.putString(LIST_CART, null);
+        myEdit.apply();
+    }
+
     public List<ItemInCart> readListCartFromPref(Context context){
         SharedPreferences preferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         String jsonCart = preferences.getString(LIST_CART,"");
@@ -72,6 +79,7 @@ public class ManagePrefConfig {
                 ItemInCart item = listCart.get(i);
                 if(item.getFieldID().equalsIgnoreCase(fieldId) && item.getBookDate().equals(date)){
                     item.setTimePicker(newItem.getTimePicker());
+                    break;
                 }
             }
             writeCartPref(context, listCart);
@@ -91,4 +99,6 @@ public class ManagePrefConfig {
             writeCartPref(context, listCart);
         }
     }
+
+
 }

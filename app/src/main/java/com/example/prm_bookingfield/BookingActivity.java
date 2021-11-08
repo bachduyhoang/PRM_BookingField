@@ -129,6 +129,7 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
                         item.setImageUrl(field.getImagePath());
                         item.setAddress(field.getAddress());
                         item.setBookDate(date);
+                        item.setTypeField(field.getTypeField());
                         item.setFiledName(field.getFieldName());
                         item.setGroupFiledName(String.valueOf(field.getGroupFieldID()));
 
@@ -268,8 +269,12 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
 
     public void clickToAddToCart(View view, ItemInCart itemInCart) {
         ManagePrefConfig managePrefConfig = new ManagePrefConfig();
-        managePrefConfig.addItemToCart(this.getApplicationContext(), itemInCart);
-        List<ItemInCart> list = managePrefConfig.readListCartFromPref(this.getApplicationContext());
+        ItemInCart item = managePrefConfig.checkItemExist(this.getApplicationContext(), itemInCart.getFieldID(), String.valueOf(itemInCart.getBookDate()));
+        if(item != null){
+            managePrefConfig.replaceItemInCart(this.getApplicationContext(), itemInCart,itemInCart.getFieldID(), String.valueOf(itemInCart.getBookDate()));
+        }else {
+            managePrefConfig.addItemToCart(this.getApplicationContext(), itemInCart);
+        }
         if(itemInCart.getTimePicker().size() ==0){
             Toast.makeText(this,"Please choose a time to book", Toast.LENGTH_LONG).show();
         }else {
