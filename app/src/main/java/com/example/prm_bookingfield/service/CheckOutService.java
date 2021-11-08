@@ -13,8 +13,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.prm_bookingfield.dtos.CartItemViewRequest;
 import com.example.prm_bookingfield.dtos.ItemInCart;
+import com.example.prm_bookingfield.dtos.MySingleton;
+import com.example.prm_bookingfield.dtos.User;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,37 +40,54 @@ public class CheckOutService{
     }
 
     public void checkOut(Context context, List<CartItemViewRequest> cart, CheckOutService.CheckOutServiceListener check){
+        String url = URL + "Booking/authenticate";
+        ManagePrefConfig mng = new ManagePrefConfig();
+        User u = mng.getToken();
+        if(u == null){
+            Toast.makeText(context, "Please login first!", Toast.LENGTH_SHORT).show();
+        }else {
+            StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    checkOutDetail(response.toString(), context, cart, new CheckOutDetailServiceListener() {
+                        @Override
+                        public void onError(String msg) {
+                            Toast.makeText(context, msg.toString(), Toast.LENGTH_SHORT).show();
+                        }
 
-        String url = URL + "Booking";
+                        @Override
+                        public void onResponse(String success) {
+                            Toast.makeText(context, "Successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    check.onResponse(response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    check.onError(error.toString());
+                }
+            }) {
+                @Override
+                protected Map<String, String> getParams() {
+                    Map<String, String> params = new HashMap<String, String>();
+                    Gson gson = new Gson();
+                    String listCart = gson.toJson(cart);
+                    params.put("discount", "0");
+                    params.put("listCart", listCart);
+                    return params;
+                }
 
-        StringRequest sr = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                check.onResponse(response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                check.onError(error.toString());
-            }
-        }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                Gson gson = new Gson();
-                String listCart = gson.toJson(cart);
-                params.put("listCart",listCart);
-                params.put("percentDiscount","0");
-                return params;
-            }
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/x-www-form-urlencoded");
-                params.put("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6IjEyMzQ1Njc4OSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiZWRhNGE3MmEtNGQ0OC00ZjI1LThjNWEtYjc5YTc1ZWU0Yzk0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiIiwiZXhwIjoxNjM2MzgyNDM2LCJpc3MiOiJodHRwczovL2JhY2hkdXlob2FuZy5jb20iLCJhdWQiOiJodHRwczovL2JhY2hkdXlob2FuZy5jb20ifQ.tfipL5DUoxIX4GyA6OSVcKJX_J-f9N9RH5TpGmr016I");
-                return params;
-            }
-        };
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("Content-Type", "application/json-patch+json; utf-8");
+                    params.put("Authorization", "Bearer " + u.getJwtToken());
+                    return params;
+                }
+            };
+            MySingleton.getInstance(context).addToRequestQueue(sr);
+        }
     }
 
     public interface CheckOutDetailServiceListener{
@@ -75,10 +95,12 @@ public class CheckOutService{
         void onResponse(String success);
     }
 
-    public void checkOutDetail(String checkOutId ,Context context, List<CartItemViewRequest> cart, CheckOutService.CheckOutServiceListener check){
-        String url = URL + "BookingDetail";
+    public void checkOutDetail(String checkOutId, Context context, List<CartItemViewRequest> cart, CheckOutService.CheckOutDetailServiceListener check){
+        String url = URL + "BookingDetail/authenticate";
+        ManagePrefConfig mng = new ManagePrefConfig();
+        User u = mng.getToken();
 
-        StringRequest sr = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 check.onResponse(response);
@@ -94,18 +116,19 @@ public class CheckOutService{
                 Map<String,String> params = new HashMap<String, String>();
                 Gson gson = new Gson();
                 String listCart = gson.toJson(cart);
-                params.put("listCart",listCart);
-                params.put("idBooking",checkOutId);
+                params.put("bookingId", checkOutId);
+                params.put("listCart", listCart);
                 return params;
             }
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type","application/x-www-form-urlencoded");
-                params.put("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9tb2JpbGVwaG9uZSI6IjEyMzQ1Njc4OSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWVpZGVudGlmaWVyIjoiZWRhNGE3MmEtNGQ0OC00ZjI1LThjNWEtYjc5YTc1ZWU0Yzk0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiIiwiZXhwIjoxNjM2MzgyNDM2LCJpc3MiOiJodHRwczovL2JhY2hkdXlob2FuZy5jb20iLCJhdWQiOiJodHRwczovL2JhY2hkdXlob2FuZy5jb20ifQ.tfipL5DUoxIX4GyA6OSVcKJX_J-f9N9RH5TpGmr016I");
+                params.put("Content-Type","application/json-patch+json; utf-8");
+                params.put("Authorization", "Bearer " + u.getJwtToken());
                 return params;
             }
         };
+        MySingleton.getInstance(context).addToRequestQueue(sr);
     }
 
 

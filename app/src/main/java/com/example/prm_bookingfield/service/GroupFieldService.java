@@ -35,50 +35,20 @@ public class GroupFieldService {
     public interface VolleyResponseListener{
         void onError(String msg);
 
-        void onResponse(List<Field> listResponse);
+        void onResponse(String name);
     }
 
     public void getGroupFieldById(int id, GroupFieldService.VolleyResponseListener volleyResponseListener){
-        String url = COMMON_URL + "GroupField/GroupFieldWithField/"+id;
+        String url = COMMON_URL + "GroupField/"+id;
 
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,  null,
-                new Response.Listener<JSONArray>() {
+        StringRequest request = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONArray response) {
+                    public void onResponse(String response) {
                         try {
-                            List<Field> fields = new ArrayList<>();
-                            for(int i = 0; i < response.length(); i++){
-                                JSONObject childField = (JSONObject) response.getJSONObject(i); // field
-                                Field field = new Field();
-                                field.setFieldName(childField.getString("name"));
-                                field.setTypeField(childField.getInt("typeField"));
-                                field.setImagePath(childField.getString("imagePath"));
-
-                                JSONArray schedules = (JSONArray) childField.getJSONArray("fieldSchedules");
-                                for(int a = 0; a < schedules.length(); a++) {
-                                    JSONObject s = (JSONObject) schedules.getJSONObject(a); // fieldschedule
-                                    FieldSchedule schedule = new FieldSchedule();
-
-                                    String timeStart = s.getString("timeStart");
-                                    String timeEnd = s.getString("timeEnd");
-
-                                    String[] start = timeStart.split("T");
-                                    String demo = start[1];
-                                    String[] end = timeEnd.split("T");
-                                    String demo2 = end[1];
-
-                                    String startSplit[] = demo.split(":");
-                                    String endSplit[] = demo2.split(":");
-
-                                    schedule.setTimeStart(startSplit[0]);
-                                    schedule.setTimeEnd(endSplit[0]);
-
-                                    schedule.setOriginPrice(s.getString("originPrice"));
-                                    field.setSchedule(schedule);
-                                }
-                                fields.add(field);
-                            }
-                            volleyResponseListener.onResponse(fields);
+                            JSONObject obj = new JSONObject(response); //group
+                            String name = obj.getString("name");
+                            volleyResponseListener.onResponse(name);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -120,6 +90,8 @@ public class GroupFieldService {
                         for(int j = 0; j < listFields.length(); j++){
                             JSONObject childField = (JSONObject) listFields.getJSONObject(j); // field
                             Field child = new Field();
+                            child.setGroupFieldID(childField.getInt("groupFieldForeinKey"));
+                            child.setFieldID(childField.getInt("fieldId"));
                             child.setFieldName(childField.getString("name"));
                             child.setTypeField(childField.getInt("typeField"));
                             child.setImagePath(childField.getString("imagePath"));
@@ -283,5 +255,4 @@ public class GroupFieldService {
         });
         MySingleton.getInstance(context).addToRequestQueue(request);
     }
-
 }

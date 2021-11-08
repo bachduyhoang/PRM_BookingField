@@ -15,6 +15,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.prm_bookingfield.dtos.User;
+import com.example.prm_bookingfield.service.ManagePrefConfig;
 import com.example.prm_bookingfield.ui.cart.CartFragment;
 import com.example.prm_bookingfield.ui.history.TabFragment;
 
@@ -63,15 +65,17 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.pageHome:
                         selectedFragment = new HomeFragment();
                         break;
-//                    case R.id.pageAccount:
-//                        if (validation.isUser()) {
-//                            selectedFragment = new ProfileFragment();
-//                        } else {
-//                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-//                            startActivity(intent);
-//                            return true;
-//                        }
-//                        break;
+                    case R.id.pageAccount:
+                        ManagePrefConfig mng = new ManagePrefConfig(MainActivity.this);
+                        User user = mng.getToken();
+                        if (user != null) {
+                            selectedFragment = new ProfileFragment();
+                        } else {
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            return true;
+                        }
+                        break;
                     case R.id.page_2:
                         selectedFragment = new CartFragment();
                         break;

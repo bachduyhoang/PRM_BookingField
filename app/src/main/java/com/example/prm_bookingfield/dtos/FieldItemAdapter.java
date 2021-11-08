@@ -1,6 +1,7 @@
 package com.example.prm_bookingfield.dtos;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.prm_bookingfield.BookingActivity;
+import com.example.prm_bookingfield.MainActivity;
 import com.example.prm_bookingfield.R;
 
 import java.text.SimpleDateFormat;
@@ -42,7 +45,6 @@ public class FieldItemAdapter extends RecyclerView.Adapter<FieldItemAdapter.View
         Field fieldItem = fieldArrayList.get(position);
         holder.tvFieldName.setText("Field: " +fieldItem.getFieldName());
         holder.tvTypeField.setText(String.valueOf(fieldItem.getTypeField()));
-
         holder.tvStartTime.setText(fieldItem.getSchedule().getTimeStart()+"h");
         holder.tvEndTime.setText(" - " + fieldItem.getSchedule().getTimeEnd()+"h");
         holder.tvOriginalPrice.setText("Price: " + fieldItem.getSchedule().getOriginPrice()+"$");
@@ -53,6 +55,17 @@ public class FieldItemAdapter extends RecyclerView.Adapter<FieldItemAdapter.View
                     .apply(new RequestOptions().override(400, 300))
                     .into(holder.ivItemField);
         }
+
+        holder.ivItemField.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity, BookingActivity.class);
+                intent.putExtra("price", String.valueOf(fieldItem.getSchedule().getOriginPrice()));
+                intent.putExtra("fieldId", String.valueOf(fieldItem.getFieldID()));
+                intent.putExtra("groupFieldId", String.valueOf(fieldItem.getGroupFieldID()));
+                activity.startActivity(intent);
+            }
+        });
     }
 
 

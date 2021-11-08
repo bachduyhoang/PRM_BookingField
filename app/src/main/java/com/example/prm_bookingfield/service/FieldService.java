@@ -38,7 +38,7 @@ public class FieldService {
 
     public interface FieldResponse{
         void onError(String msg);
-        void onResponse(List<Field> field);
+        void onResponse(Field field);
     }
 
     public void getFieldById(int id, FieldResponse volleyResponseListener){

@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.se.omapi.Session;
 
 import com.example.prm_bookingfield.LoginActivity;
-import com.example.prm_bookingfield.data.model.ItemInCart;
+import com.example.prm_bookingfield.dtos.ItemInCart;
 import com.example.prm_bookingfield.dtos.User;
 import android.preference.PreferenceManager;
 
@@ -58,12 +58,11 @@ public class ManagePrefConfig {
         return new User(preferences.getString(JWT_TOKEN, null));
     }
 
-    public void userLogout(User user){
+    public void userLogout(){
         SharedPreferences preferences = mCtx.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor myEdit = preferences.edit();
         myEdit.clear();
         myEdit.apply();
-        mCtx.startActivity(new Intent(mCtx, LoginActivity.class));
     }
 
 

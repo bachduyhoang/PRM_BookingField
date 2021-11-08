@@ -13,15 +13,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="8dp">
-        <TextView
-            android:id="@+id/tvViewMore"
-            android:gravity="right"
-            android:text="View More >>"
-            android:textStyle="bold"
-            android:textSize="15dp"
-            android:textColor="#5382AE"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
