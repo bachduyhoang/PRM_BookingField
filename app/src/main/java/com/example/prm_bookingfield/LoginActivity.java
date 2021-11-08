@@ -72,7 +72,6 @@ public class LoginActivity extends AppCompatActivity {
                     JSONObject obj = new JSONObject(response);
                     User user = new User(obj.getString("token"));
                     if(user != null){
-                        Toast.makeText(getApplicationContext(), user.getJwtToken(), Toast.LENGTH_SHORT).show();
                         isLogin = true;
                     }
                     ManagePrefConfig.getInstance(getApplicationContext()).userLogin(user);

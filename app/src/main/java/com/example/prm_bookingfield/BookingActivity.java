@@ -22,6 +22,7 @@ import com.example.prm_bookingfield.dtos.Field;
 import com.example.prm_bookingfield.dtos.FieldAndSchedule;
 import com.example.prm_bookingfield.service.FieldScheduleService;
 import com.example.prm_bookingfield.service.FieldService;
+import com.example.prm_bookingfield.service.GroupFieldService;
 import com.example.prm_bookingfield.service.ManagePrefConfig;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -55,12 +56,23 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         setContentView(R.layout.activity_booking);
 
         Intent intent = this.getIntent();
-        fieldId = intent.getStringExtra("fieldID");
-        fieldId = "1";
+
+        fieldId = intent.getStringExtra("fieldId");
         date = intent.getStringExtra("date");
-        groupField = intent.getStringExtra("groupField");
+
+        String groupFieldId = intent.getStringExtra("groupFieldId");
+        int id = Integer.parseInt(groupFieldId);
+        GroupFieldService sv = new GroupFieldService(this);
+        sv.getGroupFieldById(id, new GroupFieldService.VolleyResponseListener() {
+            @Override
+            public void onError(String msg) {
+            }
+            @Override
+            public void onResponse(String name) {
+                groupField = name;
+            }
+        });
         String price = intent.getStringExtra("price");
-        price = "5";
 
         if(date == null){
             day = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
@@ -115,9 +127,9 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
                 field.setAddress(fieldResponse.getAddress());
                 field.setImagePath(fieldResponse.getImagePath());
                 fieldAndSchedule.setField(field);
-                txtGroupFieldNameAndFieldName.setText(field.getFieldName());
+                txtGroupFieldNameAndFieldName.setText(groupField+" - "+field.getFieldName());
                 txtTypeField.setText("Type Field:" + field.getTypeField());
-                txtPrice.setText("5");
+                txtPrice.setText("$"+price);
                 txtAddress.setText(field.getAddress());
 
                 btnBook.setOnClickListener(new View.OnClickListener() {
@@ -131,11 +143,11 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
                         item.setBookDate(date);
                         item.setTypeField(field.getTypeField());
                         item.setFiledName(field.getFieldName());
-                        item.setGroupFiledName(String.valueOf(field.getGroupFieldID()));
+                        item.setGroupFiledName(String.valueOf(groupField));
 
                         List<CartTimePicker> timePickerList = new ArrayList<>();
                         for (int i = 0; i < listChecked.size(); i++) {
-                            CartTimePicker itemCartTimePicker = new CartTimePicker(listChecked.get(i).toString(), Float.parseFloat(txtPrice.getText().toString()));
+                            CartTimePicker itemCartTimePicker = new CartTimePicker(listChecked.get(i).toString(), Float.parseFloat(price));
                             timePickerList.add(itemCartTimePicker);
                         }
                         item.setTimePicker(timePickerList);
@@ -278,9 +290,9 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
         if(itemInCart.getTimePicker().size() ==0){
             Toast.makeText(this,"Please choose a time to book", Toast.LENGTH_LONG).show();
         }else {
-//            Intent intent=new Intent(BookingActivity.this,MainActivity.class);
-//            intent.putExtra("action","add to cart");
-//            startActivity(intent);
+            Intent intent = new Intent(BookingActivity.this,MainActivity.class);
+            intent.putExtra("action","add to cart");
+            startActivity(intent);
         }
     }
 

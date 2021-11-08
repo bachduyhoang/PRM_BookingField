@@ -22,15 +22,14 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:cardCornerRadius="100dp"
-                android:layout_margin="20dp"
-                >
+                android:layout_margin="20dp">
 
                 <ImageView
                     android:id="@+id/imgUser"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:scaleType="centerCrop"
-                    />
+                    android:src="@drawable/user" />
 
             </androidx.cardview.widget.CardView>
 
@@ -40,23 +39,21 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txtFullName"
+                    android:id="@+id/profile_Name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="23dp"
+                    android:text="User Name"
                     android:textStyle="bold"
                     android:layout_marginTop="40dp"/>
-
-                <Button
-                    android:id="@+id/btnUpdateUser"
+                <TextView
+                    android:id="@+id/profile_PhoneNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Edit Profile |  "
-                    android:drawableEnd="@drawable/ic_editicon"
-                    android:textSize="15dp"
-                    android:fontFamily="@font/roboto"
-                    android:textAllCaps="false"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"/>
+                    android:textSize="18dp"
+                    android:text="Phone Number"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"/>
 
             </LinearLayout>
 
@@ -78,23 +75,11 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/white_gray"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:background="@color/white_gray" />
 
     <Button
-        style="@style/TextButtonProfile"
-        android:text="History"
-        android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
-        />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/white_gray"
-        android:layout_marginBottom="10dp"/>
-
-    <Button
-        android:id="@+id/btnLogout"
+        android:id="@+id/profile_btnLogout"
         style="@style/TextButtonProfile"
         android:text="Logout"
         android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
