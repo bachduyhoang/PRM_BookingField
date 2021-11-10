@@ -107,8 +107,11 @@ public class GroupFieldService {
                                 String[] start = timeStart.split("T");
                                 String[] end = timeEnd.split("T");
 
-                                schedule.setTimeStart(start[1]);
-                                schedule.setTimeEnd(end[1]);
+                                String[] startTime = start[1].split(":");
+                                String[] endTime = end[1].split(":");
+
+                                schedule.setTimeStart(startTime[0]+":"+startTime[1]);
+                                schedule.setTimeEnd(endTime[0]+":"+endTime[1]);
                                 schedule.setOriginPrice(s.getString("originPrice"));
                                 child.setSchedule(schedule);
                             }
@@ -153,6 +156,8 @@ public class GroupFieldService {
                         for(int j = 0; j < listFields.length(); j++){
                             JSONObject childField = (JSONObject) listFields.getJSONObject(j); // field
                             Field child = new Field();
+                            child.setGroupFieldID(childField.getInt("groupFieldForeinKey"));
+                            child.setFieldID(childField.getInt("fieldId"));
                             child.setFieldName(childField.getString("name"));
                             child.setTypeField(childField.getInt("typeField"));
                             child.setImagePath(childField.getString("imagePath"));
@@ -168,8 +173,12 @@ public class GroupFieldService {
                                 String[] start = timeStart.split("T");
                                 String[] end = timeEnd.split("T");
 
-                                schedule.setTimeStart(start[1]);
-                                schedule.setTimeEnd(end[1]);
+                                String[] startTime = start[1].split(":");
+                                String[] endTime = end[1].split(":");
+
+                                schedule.setTimeStart(startTime[0]+":"+startTime[1]);
+                                schedule.setTimeEnd(endTime[0]+":"+endTime[1]);
+
                                 schedule.setOriginPrice(s.getString("originPrice"));
                                 child.setSchedule(schedule);
                             }
@@ -206,6 +215,7 @@ public class GroupFieldService {
                             for(int i = 0; i < array.length(); i++){
                                 GroupField parent = new GroupField();
                                 List<Field> fields = new ArrayList<>();
+
                                 JSONObject item = (JSONObject) array.getJSONObject(i); //group field
                                 parent.setName(item.getString("name"));
                                 parent.setAddress(item.getString("address"));
@@ -215,6 +225,8 @@ public class GroupFieldService {
                                 for(int j = 0; j < listFields.length(); j++){
                                     JSONObject childField = (JSONObject) listFields.getJSONObject(j); // field
                                     Field child = new Field();
+                                    child.setGroupFieldID(childField.getInt("groupFieldForeinKey"));
+                                    child.setFieldID(childField.getInt("fieldId"));
                                     child.setFieldName(childField.getString("name"));
                                     child.setTypeField(childField.getInt("typeField"));
                                     child.setImagePath(childField.getString("imagePath"));
@@ -230,8 +242,12 @@ public class GroupFieldService {
                                         String[] start = timeStart.split("T");
                                         String[] end = timeEnd.split("T");
 
-                                        schedule.setTimeStart(start[1]);
-                                        schedule.setTimeEnd(end[1]);
+                                        String[] startTime = start[1].split(":");
+                                        String[] endTime = end[1].split(":");
+
+                                        schedule.setTimeStart(startTime[0]+":"+startTime[1]);
+                                        schedule.setTimeEnd(endTime[0]+":"+endTime[1]);
+
                                         schedule.setOriginPrice(s.getString("originPrice"));
                                         child.setSchedule(schedule);
                                     }

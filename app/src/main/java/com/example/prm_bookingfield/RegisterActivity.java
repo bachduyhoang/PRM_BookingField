@@ -4,44 +4,51 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.example.prm_bookingfield.dtos.MySingleton;
-import com.example.prm_bookingfield.dtos.User;
-import com.example.prm_bookingfield.service.ManagePrefConfig;
-import com.example.prm_bookingfield.service.RegisterService;
 import com.google.android.material.textfield.TextInputLayout;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class RegisterActivity extends AppCompatActivity {
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.Length;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+
+public class RegisterActivity extends AppCompatActivity implements Validator.ValidationListener {
 
     public static final String URL = "https://prmbookingfield.herokuapp.com/api/";
-
+    private Validator validator;
+    @NotEmpty()
+    @Length(min = 5, max = 30)
     private TextInputLayout txtName;
-    private TextInputLayout txtDob;
-    private TextInputLayout txtEmail;
-    private TextInputLayout txtPhone;
-    private TextInputLayout txtUsername;
-    private TextInputLayout txtPassword;
-    private TextInputLayout txtConfirmPwd;
 
+    @NotEmpty()
+    private TextInputLayout txtDob;
+
+    @NotEmpty()
+    @Email
+    private TextInputLayout txtEmail;
+
+    @NotEmpty()
+    private TextInputLayout txtPhone;
+
+    @NotEmpty()
+    private TextInputLayout txtUsername;
+
+    @NotEmpty()
+    private TextInputLayout txtPassword;
+
+    @NotEmpty()
+    private TextInputLayout txtConfirmPwd;
     private Button btnSignup;
     private Button btnLogin;
 
@@ -49,6 +56,9 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        validator = new Validator(this);
+        validator.setValidationListener(this);
 
         txtName =  findViewById(R.id.actRegister_txtName);
         txtDob = findViewById(R.id.actRegister_txtDob);
@@ -76,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean checkEmpty = true;
+                validator.validate();
                 String fn = txtName.getEditText().getText().toString().trim();
                 String ln = txtName.getEditText().getText().toString().trim();
                 String dob = txtDob.getEditText().getText().toString().trim();
@@ -86,41 +96,41 @@ public class RegisterActivity extends AppCompatActivity {
                 String pwd = txtPassword.getEditText().getText().toString().trim();
                 String rePwd = txtConfirmPwd.getEditText().getText().toString().trim();
 
-                if (TextUtils.isEmpty(fn)) {
-                    txtName.setHint("Name cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (TextUtils.isEmpty(dob)) {
-                    txtDob.setHint("Day of birth cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (TextUtils.isEmpty(email)) {
-                    txtEmail.setHint("Email cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (TextUtils.isEmpty(phone)) {
-                    txtPhone.setHint("Phone Number cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (TextUtils.isEmpty(username)) {
-                    txtUsername.setHint("Username cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (TextUtils.isEmpty(pwd)) {
-                    txtPassword.setHint("Password cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (TextUtils.isEmpty(rePwd)) {
-                    txtConfirmPwd.setHint("Password cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (checkEmpty) {
+//                if (TextUtils.isEmpty(fn)) {
+//                    txtName.setHint("Name cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (TextUtils.isEmpty(dob)) {
+//                    txtDob.setHint("Day of birth cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (TextUtils.isEmpty(email)) {
+//                    txtEmail.setHint("Email cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (TextUtils.isEmpty(phone)) {
+//                    txtPhone.setHint("Phone Number cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (TextUtils.isEmpty(username)) {
+//                    txtUsername.setHint("Username cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (TextUtils.isEmpty(pwd)) {
+//                    txtPassword.setHint("Password cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (TextUtils.isEmpty(rePwd)) {
+//                    txtConfirmPwd.setHint("Password cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (checkEmpty) {
                     if (!pwd.equals(rePwd)) {
                         Toast.makeText(RegisterActivity.this, "Confirm password not match!", Toast.LENGTH_SHORT).show();
                     } else {
                         registerAccount(fn, ln, dob, email, phone, username, pwd, rePwd);
                     }
-                }
+//                }
             }
         });
     }
@@ -160,4 +170,22 @@ public class RegisterActivity extends AppCompatActivity {
         MySingleton.getInstance(this).addToRequestQueue(request);
     }
 
+    @Override
+    public void onValidationSucceeded() {
+        Toast.makeText(this, "Done", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors){
+            View view = error.getView();
+            String msg = error.getCollatedErrorMessage(this);
+            if(view instanceof TextInputLayout){
+                ((TextInputLayout) view).setError(msg);
+            }else {
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+            }
+        }
+    }
 }
