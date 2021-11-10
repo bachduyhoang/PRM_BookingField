@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/wallpagelogin"
-    tools:context=".LoginActivity">
+    tools:context=".RegisterActivity">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -42,25 +42,23 @@
                     android:textSize="50dp"
                     android:textStyle="bold" />
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/actRegister_txtName"
-                    style="@style/TextFieldLoginRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="24dp"
-                    android:hint="Name"
-                    app:startIconDrawable="@drawable/outline_account_circle_24">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        style="@style/EditTextLoginRegister"
+                    <EditText
+                        android:id="@+id/actRegister_txtName"
+                        style="@style/TextFieldLoginRegister"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="24dp"
+                        android:layout_marginStart="24dp"
+                        android:padding="10dp"
+                        android:hint="Name"
+                        android:drawablePadding="10dp"
+                        android:drawableStart="@drawable/outline_account_circle_24"
+                        android:background="@drawable/border_edit_text">
+                </EditText>
 
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
                     android:id="@+id/actRegister_txtDob"
                     style="@style/TextFieldLoginRegister"
                     android:layout_width="match_parent"
@@ -68,18 +66,15 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="24dp"
-                    android:hint="Day of Birth"
-                    app:startIconDrawable="@drawable/cake">
+                    android:padding="10dp"
+                    android:hint="Day of birth"
+                    android:drawablePadding="10dp"
+                    android:background="@drawable/border_edit_text"
+                    android:drawableStart="@drawable/cake">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        style="@style/EditTextLoginRegister"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="datetime" />
+                </EditText>
 
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
                     android:id="@+id/actRegister_txtEmail"
                     style="@style/TextFieldLoginRegister"
                     android:layout_width="match_parent"
@@ -87,18 +82,14 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="24dp"
+                    android:padding="10dp"
                     android:hint="Email"
-                    app:startIconDrawable="@drawable/outline_email_24">
+                    android:drawablePadding="10dp"
+                    android:background="@drawable/border_edit_text"
+                    android:drawableStart="@drawable/outline_email_24">
+                </EditText>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        style="@style/EditTextLoginRegister"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textEmailAddress" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
                     android:id="@+id/actRegister_txtPhone"
                     style="@style/TextFieldLoginRegister"
                     android:layout_width="match_parent"
@@ -106,18 +97,14 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="24dp"
+                    android:padding="10dp"
                     android:hint="Phone"
-                    app:startIconDrawable="@drawable/phone">
+                    android:drawablePadding="10dp"
+                    android:background="@drawable/border_edit_text"
+                    android:drawableStart="@drawable/phone">
+                </EditText>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        style="@style/EditTextLoginRegister"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="phone" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
                     android:id="@+id/actRegister_txtUsername"
                     style="@style/TextFieldLoginRegister"
                     android:layout_width="match_parent"
@@ -125,18 +112,15 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="24dp"
+                    android:padding="10dp"
                     android:hint="Username"
-                    app:startIconDrawable="@drawable/phone">
+                    android:drawablePadding="10dp"
+                    android:background="@drawable/border_edit_text"
+                    android:drawableStart="@drawable/id_card">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        style="@style/EditTextLoginRegister"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="phone" />
+                </EditText>
 
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
                     android:id="@+id/actRegister_txtPassword"
                     style="@style/TextFieldLoginRegister"
                     android:layout_width="match_parent"
@@ -144,19 +128,15 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="24dp"
+                    android:inputType="textPassword"
+                    android:padding="10dp"
                     android:hint="Password"
-                    app:endIconMode="password_toggle"
-                    app:startIconDrawable="@drawable/outline_lock_24">
+                    android:drawablePadding="10dp"
+                    android:background="@drawable/border_edit_text"
+                    android:drawableStart="@drawable/outline_lock_24">
+                </EditText>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        style="@style/EditTextLoginRegister"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
                     android:id="@+id/actRegister_txtConfirm"
                     style="@style/TextFieldLoginRegister"
                     android:layout_width="match_parent"
@@ -164,15 +144,14 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="24dp"
-                    android:hint="Confirm password"
-                    app:startIconDrawable="@drawable/outline_check_circle_24">
+                    android:inputType="textPassword"
+                    android:padding="10dp"
+                    android:hint="Confirm Password"
+                    android:drawablePadding="10dp"
+                    android:background="@drawable/border_edit_text"
+                    android:drawableStart="@drawable/outline_check_circle_24">
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        style="@style/EditTextLoginRegister"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPassword" />
-                </com.google.android.material.textfield.TextInputLayout>
+                </EditText>
             </LinearLayout>
 
             <LinearLayout

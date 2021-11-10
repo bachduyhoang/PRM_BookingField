@@ -40,7 +40,7 @@ public class CheckOutService{
     }
 
     public void checkOut(Context context, List<CartItemViewRequest> cart, CheckOutService.CheckOutServiceListener check){
-        String url = URL + "Booking/authenticate";
+        String url = URL + "Booking/checkout/booking";
         ManagePrefConfig mng = new ManagePrefConfig();
         User u = mng.getToken();
         if(u == null){
@@ -49,18 +49,20 @@ public class CheckOutService{
             StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    checkOutDetail(response.toString(), context, cart, new CheckOutDetailServiceListener() {
-                        @Override
-                        public void onError(String msg) {
-                            Toast.makeText(context, msg.toString(), Toast.LENGTH_SHORT).show();
-                        }
+                    if(response != null) {
+                        checkOutDetail(response, context, cart, new CheckOutDetailServiceListener() {
+                            @Override
+                            public void onError(String msg) {
+                                Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+                            }
 
-                        @Override
-                        public void onResponse(String success) {
-                            Toast.makeText(context, "Successfully", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    check.onResponse(response);
+                            @Override
+                            public void onResponse(String success) {
+                                Toast.makeText(context, "Successfully", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        check.onResponse(response);
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
