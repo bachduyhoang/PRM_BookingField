@@ -2,6 +2,7 @@ package com.example.prm_bookingfield.dtos;
 
 public class User {
 
+    private String userId;
     private String FirstName;
     private String LastName;
     private String DayOfBirth;
@@ -12,6 +13,14 @@ public class User {
     private String ConfirmPassword;
 
     private String JwtToken;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public User(String token) {
         JwtToken = token;

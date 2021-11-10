@@ -6,7 +6,6 @@ public class BookingDetail {
     private String timeStart;
     private String timeEnd;
     private String price;
-    private String status;
     private String bookingForeignKey;
     private String fieldScheduleForeignKey;
     private String fieldForeignKey;
@@ -43,14 +42,6 @@ public class BookingDetail {
         this.price = price;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
     public String getBookingForeignKey() {
         return bookingForeignKey;
     }
@@ -78,12 +69,11 @@ public class BookingDetail {
     public BookingDetail() {
     }
 
-    public BookingDetail(int bookingDetailId, String timeStart, String timeEnd, String price, String status, String bookingForeignKey, String fieldScheduleForeignKey, String fieldForeignKey) {
+    public BookingDetail(int bookingDetailId, String timeStart, String timeEnd, String price, String bookingForeignKey, String fieldScheduleForeignKey, String fieldForeignKey) {
         this.bookingDetailId = bookingDetailId;
         this.timeStart = timeStart;
         this.timeEnd = timeEnd;
         this.price = price;
-        this.status = status;
         this.bookingForeignKey = bookingForeignKey;
         this.fieldScheduleForeignKey = fieldScheduleForeignKey;
         this.fieldForeignKey = fieldForeignKey;

@@ -51,10 +51,12 @@ public class UserService {
                     String fn = obj.getString("firstName");
                     String ln = obj.getString("lastName");
                     String phoneNumber = obj.getString("phoneNumber");
+                    String idUser = obj.getString("id");
                     User user = new User();
                     user.setFirstName(fn);
                     user.setLastName(ln);
                     user.setPhone(phoneNumber);
+                    user.setUserId(idUser);
                     userResponse.onResponse(user);
                 } catch (JSONException e) {
                     e.printStackTrace();

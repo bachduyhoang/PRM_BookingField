@@ -22,6 +22,8 @@ public class ManagePrefConfig {
     private static final String SHARED_PREFERENCES = "MySharedPref";
     private static final String LIST_CART = "CART";
     private static final String JWT_TOKEN = "jwt_token";
+    private static final String USER_ID = "user_id";
+    private static final String USER_NAME = "user_name";
 
     private static ManagePrefConfig mInstance;
     private static Context mCtx;
@@ -45,12 +47,24 @@ public class ManagePrefConfig {
         SharedPreferences preferences = mCtx.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor myEdit = preferences.edit();
         myEdit.putString(JWT_TOKEN, user.getJwtToken());
+        myEdit.putString(USER_ID, user.getUserId());
+        myEdit.putString(USER_NAME, user.getFirstName());
         myEdit.apply();
     }
 
     public boolean isLoggedIn(){
         SharedPreferences preferences = mCtx.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
         return preferences.getString(JWT_TOKEN,null) != null;
+    }
+
+    public String getIdUser(){
+        SharedPreferences preferences = mCtx.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        return preferences.getString(USER_ID, null);
+    }
+
+    public String getNameOfUser(){
+        SharedPreferences preferences = mCtx.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
+        return preferences.getString(USER_NAME, null);
     }
 
     public User getToken(){

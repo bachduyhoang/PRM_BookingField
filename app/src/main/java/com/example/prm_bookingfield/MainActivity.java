@@ -1,23 +1,19 @@
 package com.example.prm_bookingfield;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.prm_bookingfield.dtos.GroupFieldAdapter;
 import com.example.prm_bookingfield.dtos.User;
 import com.example.prm_bookingfield.service.ManagePrefConfig;
 import com.example.prm_bookingfield.ui.cart.CartFragment;
+import com.example.prm_bookingfield.ui.history.HistoryFragment;
 import com.example.prm_bookingfield.ui.history.TabFragment;
 
 import com.example.prm_bookingfield.ui.home.HomeFragment;
@@ -28,22 +24,14 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-//import com.example.prm_bookingfield.databinding.ActivityMainBinding;
-
-import org.json.JSONArray;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private MaterialToolbar topAppBar;
     private BottomNavigationView bottomNavigationView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,13 +49,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment selectedFragment = null;
+                ManagePrefConfig mng = new ManagePrefConfig(MainActivity.this);
+                User user = mng.getToken();
                 switch (item.getItemId()) {
                     case R.id.pageHome:
                         selectedFragment = new HomeFragment();
                         break;
                     case R.id.pageAccount:
-                        ManagePrefConfig mng = new ManagePrefConfig(MainActivity.this);
-                        User user = mng.getToken();
                         if (user != null) {
                             selectedFragment = new ProfileFragment();
                         } else {
@@ -80,7 +68,13 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = new CartFragment();
                         break;
                     case R.id.page_3:
-                        selectedFragment = new TabFragment();
+                        if (user != null) {
+                            selectedFragment = new HistoryFragment();
+                        } else {
+                            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            return true;
+                        }
                         break;
                     default:
                         return false;
@@ -125,7 +119,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this, BookingActivity.class);
         startActivity(intent);
     }
-
-
 
 }

@@ -1,15 +1,19 @@
 package com.example.prm_bookingfield.ui.home;
 
+import android.app.SearchManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,17 +23,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.prm_bookingfield.R;
 import com.example.prm_bookingfield.databinding.FragmentHomeBinding;
 import com.example.prm_bookingfield.dtos.GroupField;
-import com.example.prm_bookingfield.dtos.MyAdapter;
+import com.example.prm_bookingfield.dtos.GroupFieldAdapter;
 import com.example.prm_bookingfield.service.GroupFieldService;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private MyAdapter myAdapter;
+    private GroupFieldAdapter myAdapter;
     private ArrayList<GroupField> groupFieldArrayList;
     private HomeViewModel homeViewModel;
     private FragmentHomeBinding binding;
@@ -37,6 +40,9 @@ public class HomeFragment extends Fragment {
     private ImageButton fieldFive;
     private ImageButton fieldSeven;
     private ImageButton fieldEleven;
+    private SearchView searchView;
+    private SearchView.OnQueryTextListener queryTextListener;
+
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 
     private boolean clicked = false;
@@ -48,7 +54,7 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+        
         fieldFive = root.findViewById(R.id.home_ibFieldFive);
         fieldSeven = root.findViewById(R.id.home_ibFieldSeven);
         fieldEleven = root.findViewById(R.id.home_ibFieldEleven);
@@ -70,7 +76,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onResponse(List<GroupField> listResponse) {
                             groupFieldArrayList = (ArrayList<GroupField>) listResponse;
-                            myAdapter = new MyAdapter(getActivity(), (ArrayList<GroupField>) groupFieldArrayList);
+                            myAdapter = new GroupFieldAdapter(getActivity(), (ArrayList<GroupField>) groupFieldArrayList);
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false);
                             home_rvGroupField.setLayoutManager(linearLayoutManager);
                             home_rvGroupField.setAdapter(myAdapter);
@@ -96,7 +102,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onResponse(List<GroupField> listResponse) {
                             groupFieldArrayList = (ArrayList<GroupField>) listResponse;
-                            myAdapter = new MyAdapter(getActivity(), (ArrayList<GroupField>) groupFieldArrayList);
+                            myAdapter = new GroupFieldAdapter(getActivity(), (ArrayList<GroupField>) groupFieldArrayList);
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false);
                             home_rvGroupField.setLayoutManager(linearLayoutManager);
                             home_rvGroupField.setAdapter(myAdapter);
@@ -122,7 +128,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onResponse(List<GroupField> listResponse) {
                             groupFieldArrayList = (ArrayList<GroupField>) listResponse;
-                            myAdapter = new MyAdapter(getActivity(), (ArrayList<GroupField>) groupFieldArrayList);
+                            myAdapter = new GroupFieldAdapter(getActivity(), (ArrayList<GroupField>) groupFieldArrayList);
                             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false);
                             home_rvGroupField.setLayoutManager(linearLayoutManager);
                             home_rvGroupField.setAdapter(myAdapter);
@@ -144,7 +150,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(List<GroupField> listResponse) {
                 groupFieldArrayList = (ArrayList<GroupField>) listResponse;
-                myAdapter = new MyAdapter(getActivity(), (ArrayList<GroupField>) groupFieldArrayList);
+                myAdapter = new GroupFieldAdapter(getActivity(), (ArrayList<GroupField>) groupFieldArrayList);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL,false);
                 home_rvGroupField.setLayoutManager(linearLayoutManager);
                 home_rvGroupField.setAdapter(myAdapter);
@@ -165,4 +171,34 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.top_app_bar, menu);
+        MenuItem searchItem = menu.findItem(R.id.itemSearch);
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(getContext().SEARCH_SERVICE);
+
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    myAdapter.getFilter().filter(query);
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    myAdapter.getFilter().filter(newText);
+                    return false;
+                }
+            });
+        }
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
 }
