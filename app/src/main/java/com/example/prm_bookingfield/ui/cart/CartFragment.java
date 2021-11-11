@@ -1,6 +1,7 @@
 package com.example.prm_bookingfield.ui.cart;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.prm_bookingfield.BookingActivity;
+import com.example.prm_bookingfield.MainActivity;
 import com.example.prm_bookingfield.R;
 import com.example.prm_bookingfield.adapters.CustomRecyclerViewCart;
 import com.example.prm_bookingfield.dtos.CartItemViewRequest;
@@ -67,22 +70,7 @@ public class CartFragment extends Fragment {
                 public void onClick(View view) {
                     if(itemInCartList != null){
                         CheckOutService checkOutService = new CheckOutService(getContext());
-                        List<CartItemViewRequest> cartItemViewRequestsList = new ArrayList<>();
-                        for (int i = 0; i < itemInCartList.size(); i++) {
-                            ItemInCart item = itemInCartList.get(i);
-                            for (int j = 0; j < item.getTimePicker().size(); j++) {
-                                CartTimePicker cartTimePicker = new CartTimePicker();
-                                CartItemViewRequest cartItemViewRequest = new CartItemViewRequest();
-                                cartItemViewRequest.setFieldName(item.getFiledName());
-                                cartItemViewRequest.setBookingDate(item.getBookDate());
-                                cartItemViewRequest.setFieldForeignKey(Integer.parseInt(item.getFieldID()));
-                                cartItemViewRequest.setPrice(cartTimePicker.getPrice());
-                                cartItemViewRequest.setTimeStart(item.getBookDate()+" " + item.getTimePicker().get(j).getTimePick()+":00:00");
-                                cartItemViewRequest.setTimeEnd(item.getBookDate()+" " + (Integer.parseInt(item.getTimePicker().get(j).getTimePick()) +1)+":00:00");
-                                cartItemViewRequest.setFieldScheduleId(1);
-                                cartItemViewRequestsList.add(cartItemViewRequest);
-                            }
-                        }
+                        List<CartItemViewRequest> cartItemViewRequestsList = transferToBook(itemInCartList);
                         checkOutService.checkOut(getContext(), cartItemViewRequestsList, new CheckOutService.CheckOutServiceListener() {
                             @Override
                             public void onError(String msg) {
@@ -91,8 +79,21 @@ public class CartFragment extends Fragment {
 
                             @Override
                             public void onResponse(String success) {
-                                Toast.makeText(getContext(),"Booking Success" , Toast.LENGTH_LONG);
-                                managePrefConfig.removeCart(getContext());
+                                checkOutService.checkOutDetail(success, getContext(), cartItemViewRequestsList, new CheckOutService.CheckOutDetailServiceListener() {
+                                    @Override
+                                    public void onError(String msg) {
+
+                                    }
+
+                                    @Override
+                                    public void onResponse(String success) {
+                                        Toast.makeText(getContext(),"Booking Success", Toast.LENGTH_LONG);
+                                        managePrefConfig.removeCart(getContext());
+                                        Intent intent = new Intent(getContext(), MainActivity.class);
+                                        intent.putExtra("action","add to cart");
+                                        startActivity(intent);
+                                    }
+                                });
                             }
                         });
                     }
@@ -130,5 +131,27 @@ public class CartFragment extends Fragment {
             return total;
         }
         return 0;
+    }
+
+    public List<CartItemViewRequest> transferToBook(List<ItemInCart> itemInCartList){
+        List<CartItemViewRequest> cartItemViewRequests = new ArrayList<>();
+        for (int i = 0; i < itemInCartList.size(); i++) {
+            ItemInCart item = itemInCartList.get(i);
+            for (int j = 0; j < item.getTimePicker().size(); j++) {
+
+                CartItemViewRequest cartItemViewRequest = new CartItemViewRequest();
+
+                cartItemViewRequest.setFieldName(item.getFiledName());
+                cartItemViewRequest.setBookingDate(item.getBookDate() + " 00:00:00");
+                cartItemViewRequest.setFieldForeignKey(Integer.parseInt(item.getFieldID()));
+                cartItemViewRequest.setPrice(item.getTimePicker().get(j).getPrice());
+                cartItemViewRequest.setTimeStart(item.getBookDate()+" " + item.getTimePicker().get(j).getTimePick()+":00:00");
+                cartItemViewRequest.setTimeEnd(item.getBookDate()+" " + (Integer.parseInt(item.getTimePicker().get(j).getTimePick()) +1)+":00:00");
+                cartItemViewRequest.setFieldScheduleId(1);
+
+                cartItemViewRequests.add(cartItemViewRequest);
+            }
+        }
+        return cartItemViewRequests;
     }
 }
