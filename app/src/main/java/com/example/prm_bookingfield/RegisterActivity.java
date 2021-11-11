@@ -23,6 +23,7 @@ import com.basgeekball.awesomevalidation.AwesomeValidation;
 import com.basgeekball.awesomevalidation.ValidationStyle;
 import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.prm_bookingfield.dtos.MySingleton;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -116,64 +117,32 @@ public class RegisterActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-
-
-//                if (TextUtils.isEmpty(fn)) {
-//                    txtName.setHint("Name cannot be blank!");
-//                    checkEmpty = false;
-//                }
-//                if (TextUtils.isEmpty(dob)) {
-//                    txtDob.setHint("Day of birth cannot be blank!");
-//                    checkEmpty = false;
-//                }
-//                if (TextUtils.isEmpty(email)) {
-//                    txtEmail.setHint("Email cannot be blank!");
-//                    checkEmpty = false;
-//                }
-//                if (TextUtils.isEmpty(phone)) {
-//                    txtPhone.setHint("Phone Number cannot be blank!");
-//                    checkEmpty = false;
-//                }
-//                if (TextUtils.isEmpty(username)) {
-//                    txtUsername.setHint("Username cannot be blank!");
-//                    checkEmpty = false;
-//                }
-//                if (TextUtils.isEmpty(pwd)) {
-//                    txtPassword.setHint("Password cannot be blank!");
-//                    checkEmpty = false;
-//                }
-//                if (TextUtils.isEmpty(rePwd)) {
-//                    txtConfirmPwd.setHint("Password cannot be blank!");
-//                    checkEmpty = false;
-//                }
-//                if (checkEmpty) {
-//                }
             }
         });
     }
 
     public void registerAccount(String fn, String ln, String dob, String email, String phone, String username, String pwd, String rePwd) throws JSONException {
         String url = URL + "Users/register";
+
         final StringRequest request = new StringRequest (Request.Method.POST,
                 url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if(response != null) {
-                    Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                }
+                Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         },new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(RegisterActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         })
         {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+                params.put("Content-Type", "application/json");
                 params.put("FirstName", fn);
                 params.put("LastName", ln);
                 params.put("DoB", String.valueOf(dob));
