@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onErrorResponse(VolleyError error) {
-                  Toast.makeText(LoginActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                  Toast.makeText(LoginActivity.this, "Your phone or password not valid!", Toast.LENGTH_SHORT).show();
             }
         }){
             protected Map<String, String> getParams(){

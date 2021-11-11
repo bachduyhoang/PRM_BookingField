@@ -59,8 +59,7 @@ public class CheckOutService{
             StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-
-
+                    check.onResponse(response);
                 }
             }, new Response.ErrorListener() {
                 @Override
