@@ -47,6 +47,7 @@ public class CheckOutService{
         void onResponse(String success);
     }
 
+
     public void checkOut(Context context, List<CartItemViewRequest> cart, CheckOutService.CheckOutServiceListener check) {
         String url = URL + "Booking/checkout/booking";
         ManagePrefConfig mng = new ManagePrefConfig();
@@ -58,7 +59,8 @@ public class CheckOutService{
             StringRequest sr = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    check.onResponse(response);
+
+
                 }
             }, new Response.ErrorListener() {
                 @Override

@@ -1,49 +1,53 @@
 package com.example.prm_bookingfield;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.example.prm_bookingfield.dtos.MySingleton;
-import com.example.prm_bookingfield.dtos.User;
-import com.example.prm_bookingfield.service.ManagePrefConfig;
-import com.example.prm_bookingfield.service.RegisterService;
-import com.google.android.material.textfield.TextInputLayout;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
     public static final String URL = "https://prmbookingfield.herokuapp.com/api/";
 
-    private TextInputLayout txtName;
-    private TextInputLayout txtDob;
-    private TextInputLayout txtEmail;
-    private TextInputLayout txtPhone;
-    private TextInputLayout txtUsername;
-    private TextInputLayout txtPassword;
-    private TextInputLayout txtConfirmPwd;
-
+    private EditText txtName;
+    private EditText txtDob;
+    private EditText txtEmail;
+    private EditText txtPhone;
+    private EditText txtUsername;
+    private EditText txtPassword;
+    private EditText txtConfirmPwd;
     private Button btnSignup;
     private Button btnLogin;
+
+    private AwesomeValidation awesomeValidation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,27 @@ public class RegisterActivity extends AppCompatActivity {
         btnSignup = findViewById(R.id.actRegister_btnSignUp);
         btnLogin = findViewById(R.id.actRegister_btnLogin);
 
+        awesomeValidation = new AwesomeValidation(ValidationStyle.BASIC);
+
+        awesomeValidation.addValidation(this, R.id.actRegister_txtName,
+                RegexTemplate.NOT_EMPTY, R.string.invalid_Name);
+
+        awesomeValidation.addValidation(this, R.id.actRegister_txtDob,
+                RegexTemplate.NOT_EMPTY, R.string.invalid_Dob);
+
+        awesomeValidation.addValidation(this, R.id.actRegister_txtEmail,
+                Patterns.EMAIL_ADDRESS, R.string.invalid_Email);
+
+        awesomeValidation.addValidation(this, R.id.actRegister_txtPhone,
+                "[0-9]{1}[0-9]{9}$", R.string.invalid_Phone);
+
+        awesomeValidation.addValidation(this, R.id.actRegister_txtUsername,
+                RegexTemplate.NOT_EMPTY, R.string.invalid_username);
+
+        awesomeValidation.addValidation(this, R.id.actRegister_txtPassword,
+               ".{6,}", R.string.invalid_password);
+        awesomeValidation.addValidation(this, R.id.actRegister_txtConfirm,
+                R.id.actRegister_txtPassword, R.string.invalid_RePwd);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,62 +101,64 @@ public class RegisterActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                boolean checkEmpty = true;
-                String fn = txtName.getEditText().getText().toString().trim();
-                String ln = txtName.getEditText().getText().toString().trim();
-                String dob = txtDob.getEditText().getText().toString().trim();
-                String email = txtEmail.getEditText().getText().toString().trim();
-                String phone = txtPhone.getEditText().getText().toString().trim();
-                String username = txtPhone.getEditText().getText().toString().trim();
-                String pwd = txtPassword.getEditText().getText().toString().trim();
-                String rePwd = txtConfirmPwd.getEditText().getText().toString().trim();
-
-                if (TextUtils.isEmpty(fn)) {
-                    txtName.setHint("Name cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (TextUtils.isEmpty(dob)) {
-                    txtDob.setHint("Day of birth cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (TextUtils.isEmpty(email)) {
-                    txtEmail.setHint("Email cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (TextUtils.isEmpty(phone)) {
-                    txtPhone.setHint("Phone Number cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (TextUtils.isEmpty(username)) {
-                    txtUsername.setHint("Username cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (TextUtils.isEmpty(pwd)) {
-                    txtPassword.setHint("Password cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (TextUtils.isEmpty(rePwd)) {
-                    txtConfirmPwd.setHint("Password cannot be blank!");
-                    checkEmpty = false;
-                }
-                if (checkEmpty) {
-                    if (!pwd.equals(rePwd)) {
-                        Toast.makeText(RegisterActivity.this, "Confirm password not match!", Toast.LENGTH_SHORT).show();
-                    } else {
+                if(awesomeValidation.validate()){
+                    String fn = txtName.getText().toString().trim();
+                    String ln = txtName.getText().toString().trim();
+                    String dob = txtDob.getText().toString().trim();
+                    String email = txtEmail.getText().toString().trim();
+                    String phone = txtPhone.getText().toString().trim();
+                    String username = txtPhone.getText().toString().trim();
+                    String pwd = txtPassword.getText().toString().trim();
+                    String rePwd = txtConfirmPwd.getText().toString().trim();
+                    try {
                         registerAccount(fn, ln, dob, email, phone, username, pwd, rePwd);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
+
+
+//                if (TextUtils.isEmpty(fn)) {
+//                    txtName.setHint("Name cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (TextUtils.isEmpty(dob)) {
+//                    txtDob.setHint("Day of birth cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (TextUtils.isEmpty(email)) {
+//                    txtEmail.setHint("Email cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (TextUtils.isEmpty(phone)) {
+//                    txtPhone.setHint("Phone Number cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (TextUtils.isEmpty(username)) {
+//                    txtUsername.setHint("Username cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (TextUtils.isEmpty(pwd)) {
+//                    txtPassword.setHint("Password cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (TextUtils.isEmpty(rePwd)) {
+//                    txtConfirmPwd.setHint("Password cannot be blank!");
+//                    checkEmpty = false;
+//                }
+//                if (checkEmpty) {
+//                }
             }
         });
     }
 
-    public void registerAccount(String fn, String ln, String dob, String email, String phone, String username, String pwd, String rePwd){
+    public void registerAccount(String fn, String ln, String dob, String email, String phone, String username, String pwd, String rePwd) throws JSONException {
         String url = URL + "Users/register";
-        StringRequest request = new StringRequest(Request.Method.POST,
+        final StringRequest request = new StringRequest (Request.Method.POST,
                 url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if(response != null){
+                if(response != null) {
                     Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 }
@@ -141,11 +168,12 @@ public class RegisterActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(RegisterActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
             }
-        }){
+        })
+        {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("Content-Type", "application/json");
+                params.put("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
                 params.put("FirstName", fn);
                 params.put("LastName", ln);
                 params.put("DoB", String.valueOf(dob));
@@ -159,5 +187,4 @@ public class RegisterActivity extends AppCompatActivity {
         };
         MySingleton.getInstance(this).addToRequestQueue(request);
     }
-
 }

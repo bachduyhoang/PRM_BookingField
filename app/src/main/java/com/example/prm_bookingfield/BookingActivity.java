@@ -311,7 +311,8 @@ public class BookingActivity extends AppCompatActivity implements DatePickerDial
     @Override
     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
         String thisDate = i2 + "/" +(i1 +1)  +"/"+i;
-        txtDate.setText(thisDate);
+
         date = thisDate;
+        txtDate.setText(thisDate);
     }
 }

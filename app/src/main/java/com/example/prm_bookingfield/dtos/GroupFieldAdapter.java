@@ -1,14 +1,13 @@
 package com.example.prm_bookingfield.dtos;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,15 +20,18 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.prm_bookingfield.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class GroupFieldAdapter extends RecyclerView.Adapter<GroupFieldAdapter.ViewHolder> implements Filterable {
 
     private Activity activity;
-    ArrayList<GroupField> groupFieldArrayList;
+    List<GroupField> groupFieldArrayList;
+    List<GroupField> groupFieldArrayListTemp;
 
-    public MyAdapter(Activity activity, ArrayList<GroupField> groupFieldArrayList) {
+    public GroupFieldAdapter(Activity activity, ArrayList<GroupField> groupFieldArrayList) {
         this.activity = activity;
         this.groupFieldArrayList = groupFieldArrayList;
+        this.groupFieldArrayListTemp = groupFieldArrayList;
     }
 
     @NonNull
@@ -84,4 +86,36 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             imageGroupField = itemView.findViewById(R.id.ivGroupField);
         }
     }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String keyword = charSequence.toString();
+                if(keyword.isEmpty()){
+                    groupFieldArrayList = groupFieldArrayListTemp;
+                }else{
+                    List<GroupField> list = new ArrayList<>();
+                    for(GroupField g : groupFieldArrayListTemp){
+                        if(g.getName().toLowerCase().contains(keyword.toLowerCase())){
+                            list.add(g);
+                        }
+                    }
+                    groupFieldArrayList = list;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = groupFieldArrayList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                groupFieldArrayList = (List<GroupField>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+
 }
