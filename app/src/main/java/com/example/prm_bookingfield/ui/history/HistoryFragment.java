@@ -73,7 +73,7 @@ public class HistoryFragment extends Fragment {
                             history_rvListBooking.setLayoutManager(linearLayoutManager);
                             history_rvListBooking.setAdapter(bookingAdapter);
                         }else{
-                            tvError.setText("Nothing to show!");
+                            tvError.setText("Your history is empty!");
                         }
                     }
                 });
