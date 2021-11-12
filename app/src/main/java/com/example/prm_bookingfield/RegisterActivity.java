@@ -88,6 +88,8 @@ public class RegisterActivity extends AppCompatActivity {
         awesomeValidation.addValidation(this, R.id.actRegister_txtConfirm,
                 R.id.actRegister_txtPassword, R.string.invalid_RePwd);
 
+
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,8 +136,8 @@ public class RegisterActivity extends AppCompatActivity {
         },new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                Toast.makeText(getApplicationContext(), "Registration fail!", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             }
         })
         {
